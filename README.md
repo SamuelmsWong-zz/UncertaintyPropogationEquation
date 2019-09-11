@@ -4,8 +4,8 @@ A verilog source for a unit that applies the first-order uncertainty propogation
 UPU: Uncertainty Propogation Unit
 
 First-order uncertainty propogation equation:
-$$\sigma_z^2 = \left({{\delta f}\over{\delta x}}\sigma_x\right)^2 + 2{{\delta f}\over{\delta x}}{{\delta f}\over{\delta y}}\sigma_{xy} + \left({{\delta f}\over{\delta y}}\sigma_y\right)^2$$
-
+![](https://latex.codecogs.com/gif.latex?%24%24%5Csigma_z%5E2%20%3D%20%5Cleft%28%7B%7B%5Cdelta%20f%7D%5Cover%7B%5Cdelta%20x%7D%7D%5Csigma_x%5Cright%29%5E2%20&plus;%202%7B%7B%5Cdelta%20f%7D%5Cover%7B%5Cdelta%20x%7D%7D%7B%7B%5Cdelta%20f%7D%5Cover%7B%5Cdelta%20y%7D%7D%5Csigma_%7Bxy%7D%20&plus;%20%5Cleft%28%7B%7B%5Cdelta%20f%7D%5Cover%7B%5Cdelta%20y%7D%7D%5Csigma_y%5Cright%29%5E2%24%24)
+The LaTex if ou feel you need it: $$\sigma_z^2 = \left({{\delta f}\over{\delta x}}\sigma_x\right)^2 + 2{{\delta f}\over{\delta x}}{{\delta f}\over{\delta y}}\sigma_{xy} + \left({{\delta f}\over{\delta y}}\sigma_y\right)^2$$
 	var_x	 _______________________
 	dfdx	 _______________	x16u____
 		 	\_______x16s___/	|
