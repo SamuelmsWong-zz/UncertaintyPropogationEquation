@@ -1,12 +1,16 @@
+# TARGET = tb-dsp-16add
 # TARGET = tb-dsp-32add
-TARGET = tb-dsp-16mul
+TARGET = tb-dsp-48add
+# TARGET = tb-dsp-16mul
 # TARGET = tb-dsp-triple16mul
+# TARGET = tb-32negate
+# TARGET = tb-16negate
+# TARGET = tb-16abs
+# TARGET = tb-32abs
 PINCONFIG = pins.pcf
 
-RM		= rm -rf
-DEL		= rm -rf
 
-all: yosys nextpnr icepack run
+all: yosys nextpnr icepack run clean
 
 yosys:
 	yosys -qp "synth_ice40 -blif $(TARGET).blif; write_json $(TARGET).json" $(TARGET).v

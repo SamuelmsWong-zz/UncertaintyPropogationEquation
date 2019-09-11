@@ -1,5 +1,5 @@
 `include "dsp-add.v"
-module tb_dsp_32add(led0);
+module tb_dsp_16add(led0);
 	output led0;
 
 	wire		clk;
@@ -23,12 +23,13 @@ module tb_dsp_32add(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	dsp_32add adder(
-		.AB(x1[31:0]),
-		.CD(x2[31:0]),
-		.Out(y[31:0]),
-		.carryin(carryin),
-		.carryout(carryout)
+	dsp_16adduu adder(
+		.A(x1[31:16]),
+		.B(x1[15:0]),
+		.C(x2[31:16]),
+		.D(x2[15:0]),
+		.Out1(y[31:16]),
+		.Out2(y[15:0]),
 	);
 	initial begin
 		x1 = 32'h67510B12;

@@ -1,4 +1,4 @@
-module dsp_16mul(A, B, O, A_SIGNED, B_SIGNED); // A * B = O
+module dsp_16mul(A, B, Out, A_SIGNED, B_SIGNED); // Out = A * B
 	input [15:0]	A;
 	input [15:0]	B;
 	input		A_SIGNED;
@@ -6,7 +6,7 @@ module dsp_16mul(A, B, O, A_SIGNED, B_SIGNED); // A * B = O
 
 
 
-	output [31:0]	O;
+	output [31:0]	Out;
 
 	/*
 	 *	Refer to SB_MAC16 DSP Functional Model
@@ -17,7 +17,7 @@ module dsp_16mul(A, B, O, A_SIGNED, B_SIGNED); // A * B = O
 	.B(B),
 	.C(8'b00000000), // default
 	.D(8'b00000000), // default
-	.O(O),
+	.O(Out),
 	.CLK(),
 	.CE(1'b1), // default
 	.IRSTTOP(1'b0), // default
@@ -68,17 +68,7 @@ module dsp_16mul(A, B, O, A_SIGNED, B_SIGNED); // A * B = O
 	defparam i_sbmac16.BOTADDSUB_CARRYSELECT = 2'b00; // C21-20: default
 
 	defparam i_sbmac16.MODE_8x8 = 1'b0; // C22: Not 8x8 power save mode
-	if (A_SIGNED) begin
-		defparam i_sbmac16.A_SIGNED = 1'b1; // C23: A is signed
-	end
-	else begin
-		defparam i_sbmac16.A_SIGNED = 1'b0; // C23: A is unsigned
-	end
-	if (B_SIGNED) begin
-		defparam i_sbmac16.B_SIGNED = 1'b1; // C24: B is signed
-	end
-	else begin
-		defparam i_sbmac16.B_SIGNED = 1'b0; // C24: B is unsigned
-	end
+	defparam i_sbmac16.A_SIGNED = 1'b1; // C23: A is signed
+	defparam i_sbmac16.B_SIGNED = 1'b1; // C24: B is signed
 
 endmodule

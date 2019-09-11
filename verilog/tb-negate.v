@@ -1,5 +1,5 @@
-`include "dsp-16mul.v"
-module tb_dsp_16mul(led0);
+`include "negate.v"
+module tb_negate32bit(led0);
 	output led0;
 
 	wire		clk;
@@ -7,8 +7,7 @@ module tb_dsp_16mul(led0);
 	reg [31:0]	count = 0;
 	reg [4:0]	bitnum = 0;
 
-	reg [15:0]	x1;
-	reg [15:0]	x2;
+	reg [31:0]	x;
 
 	wire [31:0]	y;
 
@@ -21,18 +20,13 @@ module tb_dsp_16mul(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	dsp_16mul muler(
-		.A(x1[15:0]),
-		.B(x2[15:0]),
+	negate32bit negate(
+		.In(x[31:0]),
 		.Out(y[31:0]),
-		.A_SIGNED(1'b1),
-		.B_SIGNED(1'b1),
 	);
-
 	initial begin
-		x1 = 16'h3953;
-		x2 = 16'h5ACD;
-		// y = 32'h14551577; You might recognise this rythym...
+		x = 32'hCB2AEACF;
+		// // y = 32'h34D51531; You might recognise this rythym...
 	end
 
 	always @(posedge clk) begin
@@ -42,7 +36,7 @@ module tb_dsp_16mul(led0);
 			LED0status <= y[bitnum];
 		end
 		else begin
-			count <= count + 1;
+			count <= count +1;
 		end
 	end
 
