@@ -4,6 +4,7 @@ A verilog source for a unit that applies the first-order uncertainty propogation
 UPU: Uncertainty Propogation Unit
 
 First-order uncertainty propogation equation:
+
 $$\sigma_z^2 = \left({{\delta f}\over{\delta x}}\sigma_x\right)^2 + 2{{\delta f}\over{\delta x}}{{\delta f}\over{\delta y}}\sigma_{xy} + \left({{\delta f}\over{\delta y}}\sigma_y\right)^2$$
 
 	var_x	 _______________________
