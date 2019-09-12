@@ -1,15 +1,15 @@
-module dsp_16mul(A, B, Out, A_SIGNED, B_SIGNED); // Out = A * B
+`define GOT_UPE_MUL16V
+
+module upe_mul16uu(A, B, Out); // Out = A * B
 	input [15:0]	A;
 	input [15:0]	B;
-	input		A_SIGNED;
-	input		B_SIGNED;
 
 
 
 	output [31:0]	Out;
 
 	/*
-	 *	Refer to SB_MAC16 DSP Functional Model
+	 *	Refer to SB_MAC16 upe Functional Model
 	 */
 	SB_MAC16 i_sbmac16
 	(
@@ -43,7 +43,7 @@ module dsp_16mul(A, B, Out, A_SIGNED, B_SIGNED); // Out = A * B
 	);
 
 	/*
-	 *	Refer to SB_MAC16 DSP Functional Model
+	 *	Refer to SB_MAC16 upe Functional Model
 	 */
 	defparam i_sbmac16.NEG_TRIGGER = 1'b0; // Set clock polarity to rising edge
 
@@ -68,7 +68,7 @@ module dsp_16mul(A, B, Out, A_SIGNED, B_SIGNED); // Out = A * B
 	defparam i_sbmac16.BOTADDSUB_CARRYSELECT = 2'b00; // C21-20: default
 
 	defparam i_sbmac16.MODE_8x8 = 1'b0; // C22: Not 8x8 power save mode
-	defparam i_sbmac16.A_SIGNED = 1'b1; // C23: A is signed
-	defparam i_sbmac16.B_SIGNED = 1'b1; // C24: B is signed
+	defparam i_sbmac16.A_SIGNED = 1'b0; // C23: A is unsigned
+	defparam i_sbmac16.B_SIGNED = 1'b0; // C24: B is unsigned
 
 endmodule

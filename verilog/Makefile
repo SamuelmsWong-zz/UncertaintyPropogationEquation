@@ -1,12 +1,12 @@
-# TARGET = tb-dsp-16add
-# TARGET = tb-dsp-32add
-TARGET = tb-dsp-48add
-# TARGET = tb-dsp-16mul
-# TARGET = tb-dsp-triple16mul
-# TARGET = tb-32negate
-# TARGET = tb-16negate
-# TARGET = tb-16abs
-# TARGET = tb-32abs
+# TARGET = tb-upe-add16
+# TARGET = tb-upe-add32
+# TARGET = tb-upe-add64
+# TARGET = tb-upe-mul16
+TARGET = tb-upe-triplemul16
+# TARGET = tb-upe-negate32
+# TARGET = tb-upe-negate16
+# TARGET = tb-upe-abs16
+# TARGET = tb-upe-abs32
 PINCONFIG = pins.pcf
 
 

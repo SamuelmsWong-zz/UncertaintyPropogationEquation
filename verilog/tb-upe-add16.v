@@ -1,5 +1,5 @@
-`include "dsp-add.v"
-module tb_dsp_16add(led0);
+`include "upe-add.v"
+module tb_upe_add16(led0);
 	output led0;
 
 	wire		clk;
@@ -23,7 +23,8 @@ module tb_dsp_16add(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	dsp_16adduu adder(
+	
+	upe_add16uu adder(
 		.A(x1[31:16]),
 		.B(x1[15:0]),
 		.C(x2[31:16]),
@@ -31,6 +32,7 @@ module tb_dsp_16add(led0);
 		.Out1(y[31:16]),
 		.Out2(y[15:0]),
 	);
+
 	initial begin
 		x1 = 32'h67510B12;
 		x2 = 32'hCD840A1F;

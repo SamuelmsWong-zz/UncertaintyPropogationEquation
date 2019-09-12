@@ -1,6 +1,6 @@
-`include "abs.v"
+`include "upe-abs.v"
 
-module tb_abs16bit(led0);
+module tb_upe_abs16(led0);
 	output led0;
 
 	wire		clk;
@@ -23,7 +23,7 @@ module tb_abs16bit(led0);
 		.CLKLF(clk)
 	);
 
-	abs16bit abs
+	upe_abs16s abs
 	(
 		.In1(x[31:16]),
 		.In2(x[15:0]),

@@ -17,7 +17,9 @@ SB_MAC16 DSP Functional Model (Please replace with a higher resolution image if 
 
 
 This is a basic version.
+![](BasicIdea.png)
 This design assumes the UPU to be a logic block (in that it is treated just like an ALU - pure combinational logic with no registers), so all values will percolate asychronously. Therefore all values will be non-registered. The quantity of DSP blocks used have not been considered.
+For easy multiplication, the absolute values of the inputs will be used and then the sign re-introduced at after multiplication.
 
 - The UPU verilog code makes use of multiple ice40 DSPs to carry out its addition and multiplication.
 - DSP functions are determined by the various input signals and control signals (for some reason yosys does not allow control signals to be non-constant).

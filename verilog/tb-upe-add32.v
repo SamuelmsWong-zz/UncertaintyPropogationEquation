@@ -1,5 +1,5 @@
-`include "dsp-add.v"
-module tb_dsp_32add(led0);
+`include "upe-add.v"
+module tb_upe_add32(led0);
 	output led0;
 
 	wire		clk;
@@ -23,25 +23,25 @@ module tb_dsp_32add(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	dsp_32add adder(
+	upe_add32uu adder(
 		.AB(x1[31:0]),
 		.CD(x2[31:0]),
-		.Out(y[31:0]),
+		.Out(/*y[31:0]*/),
 		.carryin(carryin),
 		.carryout(carryout)
 	);
 	initial begin
 		x1 = 32'h67510B12;
 		x2 = 32'hCD840A1F;
-		// y = 32'h34D51531; You might recognise this rythym...
+		y = 32'h34D51531; // You might recognise this rythym...
 
 		// x1 = 32'h7F7DF7D8;
 		// x2 = 32'hFFFFFFFF;
-		// // y = 32'h7F7DF7D7; You might recognise this rythym...
+		// // y = 32'h7F7DF7D7; // You might recognise this rythym...
 
 		// x1 = 32'h55555556;
 		// x2 = 32'hFFFFFFFF;
-		// // y = 32'h7F7DF7D7; You might recognise this rythym...
+		// // y = 32'h7F7DF7D7; // You might recognise this rythym...
 	end
 
 	always @(posedge clk) begin

@@ -1,5 +1,5 @@
-`include "dsp-16mul.v"
-module tb_dsp_16mul(led0);
+`include "upe-mul.v"
+module tb_upe_mul16(led0);
 	output led0;
 
 	wire		clk;
@@ -21,7 +21,7 @@ module tb_dsp_16mul(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	dsp_16mul muler(
+	upe_mul16uu muler(
 		.A(x1[15:0]),
 		.B(x2[15:0]),
 		.Out(y[31:0]),

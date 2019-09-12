@@ -1,38 +1,40 @@
-`include "negate.v"
-module tb_negate16bit(led0);
+`include "upe-add.v"
+module tb_upe_add64(led0);
 	output led0;
 
 	wire		clk;
 	reg		LED0status = 0;
 	reg [31:0]	count = 0;
-	reg [4:0]	bitnum = 0;
+	reg [6:0]	bitnum = 0;
 
-	reg [31:0]	x;
+	reg [63:0]	x1;
+	reg [63:0]	x2;
+	reg		carryin = 1;
 
-	wire [31:0]	y;
+	wire [63:0]	y;
+	wire		carryout;
 
 	/*
 	 *	Creates a 10kHz clock signal from
 	 *	internal oscillator of the iCE40
 	 */
-	SB_LFOSC OSCInst1
-	(
+	SB_LFOSC OSCInst1 (
 		.CLKLFPU(1'b1),
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-
-	negate16bit negate
-	(
-		.In1(x[31:16]),
-		.In2(x[15:0]),
-		.Out1(y[31:16]),
-		.Out2(y[15:0]),
+	upe_add64uu adder(
+		.A(x1[63:0]),
+		.B(x2[63:0]),
+		.Out(y[63:0]),
+		.carryin(carryin),
+		.carryout(carryout),
 	);
-	
+
 	initial begin
-		x = 32'hCB2BEACF;
-		// // y = 32'h34D51531; You might recognise this rythym...
+		x1 = 64'h5CD5153134D51531;
+		x2 = 64'hFFFFFFFFFFFFFFFF;
+		// y = 64'h007FFF3CF7D7; You might recognise this rythym...
 	end
 
 	always @(posedge clk) begin

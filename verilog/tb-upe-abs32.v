@@ -1,5 +1,6 @@
-`include "negate.v"
-module tb_negate32bit(led0);
+`include "upe-abs.v"
+
+module tb_upe_abs32(led0);
 	output led0;
 
 	wire		clk;
@@ -15,17 +16,22 @@ module tb_negate32bit(led0);
 	 *	Creates a 10kHz clock signal from
 	 *	internal oscillator of the iCE40
 	 */
-	SB_LFOSC OSCInst1 (
+	SB_LFOSC OSCInst1
+	(
 		.CLKLFPU(1'b1),
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	negate32bit negate(
+
+	upe_abs32s abs
+	(
 		.In(x[31:0]),
 		.Out(y[31:0]),
 	);
+
 	initial begin
 		x = 32'hCB2AEACF;
+		// x = 32'h34D51531;
 		// // y = 32'h34D51531; You might recognise this rythym...
 	end
 
