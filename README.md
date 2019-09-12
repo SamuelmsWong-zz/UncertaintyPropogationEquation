@@ -21,7 +21,7 @@ This design assumes the UPU to be a logic block (in that it is treated just like
 
 - The UPU verilog code makes use of multiple ice40 DSPs to carry out its addition and multiplication.
 - DSP functions are determined by the various input signals and control signals (for some reason yosys does not allow control signals to be non-constant).
-- The second term of the UPE requires a 3-operand multiply and a 1-bit shift to the right. This means 3 16-bit inputs will produce a 48-bit output. Is this desired?
+- The each term of the UPE requires a 3-operand multiply (and the 2nd has a 1-bit shift to the right). This means 3 16-bit inputs will produce a 48-bit output. Is this desired?
 
 #Discussion:
 How many bits should the UPU work with?
