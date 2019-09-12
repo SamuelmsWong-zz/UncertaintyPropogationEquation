@@ -90,7 +90,7 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 
 	upe_resign64u resign
 	(
-		.In(abs_term_xy),
+		.In({abs_term_xy[62:0],1'b0}), // Multiply by 2
 		.sign(sign_covar_xy ^ sign_dfdx ^ sign_dfdy),
 		.Out(term_xy),
 	);
