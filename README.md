@@ -25,7 +25,7 @@ For easy multiplication, the absolute values of the inputs will be used and then
 - DSP functions are determined by the various input signals and control signals (for some reason yosys does not allow control signals to be non-constant).
 - Each term of the UPE requires a 3-operand multiply (and the 2nd has a 1-bit shift to the right). This means 3 16-bit inputs will produce a 48-bit output. Is this desired?
 - (As far as I know), the DSP cannot perform 2 independent 16-bit additions each with carry.
-- The quantity of DSP blocks used have not been considered. I have used quite a lot.
+- The quantity of DSP blocks used have not been considered. I have used too many (~14 - the Ice40up5k only has 8).
 - Any `probe` outputs were only used for testing. They can be removed.
 
 # Discussion:
