@@ -17,7 +17,7 @@ module upe_tripleadd32 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2);
 
 	wire [31:0]	AplusB;
 
-	upe_add32ss add1
+	upe_add32uu add1
 	(
 		.AB(A),
 		.CD(B),
@@ -26,7 +26,7 @@ module upe_tripleadd32 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2);
 		.carryout(carryout1),
 	);
 
-	upe_add32ss add2
+	upe_add32uu add2
 	(
 		.AB(AplusB),
 		.CD(C),
@@ -37,7 +37,7 @@ module upe_tripleadd32 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2);
 
 endmodule
 
-module upe_tripleadd64 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2);
+module upe_tripleadd64 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2, probe1, probe2);
 	input [63:0]	A;
 	input [63:0]	B;
 	input [63:0]	C;
@@ -47,6 +47,9 @@ module upe_tripleadd64 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2);
 	output [63:0]	Out;
 	output		carryout1;
 	output		carryout2;
+
+	output		probe1;
+	output		probe2;
 
 	wire		midcarry1;
 	wire		midcarry2;
@@ -75,4 +78,6 @@ module upe_tripleadd64 (A, B, C, Out, carryin1, carryin2, carryout1, carryout2);
 		.carryout2(carryout2),
 	);
 
+	assign probe1 = midcarry1;
+	assign probe2 = midcarry2;
 endmodule

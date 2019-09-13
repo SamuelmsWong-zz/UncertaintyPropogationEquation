@@ -9,4 +9,5 @@
 #		http://www.latticesemi.com/en/Products/FPGAandCPLD/iCE40UltraPlus
 #
 set_io led0 D3
-#set_io led1 A5
+set_io led1 A5
+set_io led2 B5

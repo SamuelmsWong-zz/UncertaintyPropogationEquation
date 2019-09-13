@@ -5,26 +5,6 @@
 
 `define GOT_UPE_RESIGNV
 
-module upe_resign32u(In, Out, sign); // Out = sign-In
-	input [31:0]	In;
-	input		sign;
-	output [31:0]	Out;
-
-	wire [31:0]	negative;
-	wire [31:0]	signext;
-
-	upe_negate32 negate
-	(
-		.In(In),
-		.Out(negative),
-	);
-
-	assign signext = {32{sign}};
-
-	assign Out = (signext&negative)|((~signext)&In);
-
-endmodule
-
 module upe_resign16u(In1, In2, Out1, Out2, sign1, sign2); // Out1 = |In1|, Out2 = |In2|
 	input [15:0]	In1;
 	input [15:0]	In2;
@@ -38,7 +18,7 @@ module upe_resign16u(In1, In2, Out1, Out2, sign1, sign2); // Out1 = |In1|, Out2 
 	wire [15:0]	signext1;
 	wire [15:0]	signext2;
 
-	upe_negate16 negate
+	upe_negate16u negate
 	(
 		.In1(In1),
 		.In2(In2),
@@ -51,5 +31,45 @@ module upe_resign16u(In1, In2, Out1, Out2, sign1, sign2); // Out1 = |In1|, Out2 
 
 	assign Out1 = (signext1 & negative1) | ( (~signext1) & In1);
 	assign Out2 = (signext2 & negative2) | ( (~signext2) & In2);
+
+endmodule
+
+module upe_resign32u(In, Out, sign); // Out = sign-In
+	input [31:0]	In;
+	input		sign;
+	output [31:0]	Out;
+
+	wire [31:0]	negative;
+	wire [31:0]	signext;
+
+	upe_negate32u negate
+	(
+		.In(In),
+		.Out(negative),
+	);
+
+	assign signext = {32{sign}};
+
+	assign Out = (signext&negative)|((~signext)&In);
+
+endmodule
+
+module upe_resign64u(In, Out, sign); // Out = sign-In
+	input [63:0]	In;
+	input		sign;
+	output [63:0]	Out;
+
+	wire [63:0]	negative;
+	wire [63:0]	signext;
+
+	upe_negate64u negate
+	(
+		.In(In),
+		.Out(negative),
+	);
+
+	assign signext = {64{sign}};
+
+	assign Out = (signext&negative)|((~signext)&In);
 
 endmodule

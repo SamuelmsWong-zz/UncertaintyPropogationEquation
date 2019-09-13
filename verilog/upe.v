@@ -1,23 +1,36 @@
 `ifndef GOT_UPE_TRIPLEADDV
 	`include "upe-tripleadd.v"
 `endif
-`ifndef GOT_UPE_TRIPLEMUL16V
+`ifndef GOT_UPE_TRIPLEMULV
 	`include "upe-triplemul.v"
 `endif
 `ifndef GOT_UPE_ABSV
 	`include "upe-abs.v"
 `endif
+`ifndef GOT_UPE_RESIGNV
+	`include "upe-resign.v"
+`endif
 
 `define GOT_UPEV
 
-module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
-	wire		clk;
+// module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
+// 	input [15:0]	var_x;
+// 	input [15:0]	var_y;
+// 	input [15:0]	covar_xy;
+// 	input [15:0]	dfdx;
+// 	input [15:0]	dfdy;
+// 	output [63:0]	var_z;
 
+// 	assign var_z = (var_x * dfdx * dfdx) + (covar_xy * dfdx * dfdy) + (var_y * dfdy * dfdy);
+// endmodule
+
+module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 	input [15:0]	var_x;
 	input [15:0]	var_y;
 	input [15:0]	covar_xy;
 	input [15:0]	dfdx;
 	input [15:0]	dfdy;
+
 	output [63:0]	var_z;
 
 	wire [15:0]	abs_covar_xy;
@@ -33,23 +46,18 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 	wire [63:0]	term_xy;
 	wire [63:0]	term_y;
 
-
-	/*
-	 *	SB_HFOSC generates a 48MHz clock
+	/*	Remove the signs from the inputs for easy
+	 *	multiplication and multiply the signs
+	 *	separately. They will be added back later.
+	 *	Note that variances are always positive,
+	 *	so do not need to be changed.
 	 */
-	SB_HFOSC OSCInst1
-	(
-		.CLKHFPU(1'b1),
-		.CLKHFEN(1'b1),
-		.CLKHF(clk)
-	);
-
 	upe_abs16s abs_grad
 	(
 		.In1(dfdx),
-		.In2(dfdx),
+		.In2(dfdy),
 		.Out1(abs_dfdx),
-		.Out2(abs_dfdx),
+		.Out2(abs_dfdy),
 		.popsign1(sign_dfdx),
 		.popsign2(sign_dfdy),
 	);
@@ -64,12 +72,16 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 		.popsign2(), // default
 	);
 
+	/*	Multiply the unsigned inputs together to
+	 *	result in the 3 terms of the UPE. Triplemul
+	 *	zero-extends the result from 48bit to 64bit.
+	 */
 	upe_triplemul16uuu mul_term_x
 	(
 		.A(var_x),
 		.B(abs_dfdx),
 		.C(abs_dfdx),
-		.O(term_x),
+		.Out(term_x),
 	);
 
 	upe_triplemul16uuu mul_term_xy
@@ -77,7 +89,7 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 		.A(abs_covar_xy),
 		.B(abs_dfdy),
 		.C(abs_dfdx),
-		.O(abs_term_xy),
+		.Out(abs_term_xy),
 	);
 
 	upe_triplemul16uuu mul_term_y
@@ -88,6 +100,10 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 		.Out(term_y),
 	);
 
+	/*	Double and re-sign the 2nd term of the
+	 *	equation, which could be positive or
+	 *	negative.
+	 */
 	upe_resign64u resign
 	(
 		.In({abs_term_xy[62:0],1'b0}), // Multiply by 2
@@ -95,6 +111,10 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 		.Out(term_xy),
 	);
 
+	/*	Add up the 3 terms of the UPE. As they
+	 *	were originally 48bit numbers, there will
+	 *	be no 64bit overflow.
+	 */
 	upe_tripleadd64 add
 	(
 		.A(term_x),
@@ -106,6 +126,5 @@ module upe(var_x, var_y, covar_xy, dfdx, dfdy, var_z);
 		.carryout1(),
 		.carryout2(),
 	);
-
 
 endmodule

@@ -23,6 +23,7 @@ module tb_upe_add32(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
+
 	upe_add32uu adder(
 		.AB(x1[31:0]),
 		.CD(x2[31:0]),
@@ -30,6 +31,7 @@ module tb_upe_add32(led0);
 		.carryin(carryin),
 		.carryout(carryout)
 	);
+
 	initial begin
 		x1 = 32'h67510B12;
 		x2 = 32'hCD840A1F;
@@ -56,4 +58,5 @@ module tb_upe_add32(led0);
 	end
 
 	assign	led0 = LED0status;
+
 endmodule

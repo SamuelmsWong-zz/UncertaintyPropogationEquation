@@ -15,10 +15,10 @@ module upe_mul16uu(A, B, Out); // Out = A * B
 	(
 	.A(A),
 	.B(B),
-	.C(8'b00000000), // default
-	.D(8'b00000000), // default
+	.C(16'h0000), // default
+	.D(16'h0000), // default
 	.O(Out),
-	.CLK(),
+	.CLK(1'b0), // default
 	.CE(1'b1), // default
 	.IRSTTOP(1'b0), // default
 	.IRSTBOT(1'b0), // default
@@ -30,13 +30,13 @@ module upe_mul16uu(A, B, Out); // Out = A * B
 	.DHOLD(1'b0), // default
 	.OHOLDTOP(1'b0), // default
 	.OHOLDBOT(1'b0), // default
-	.OLOADTOP(1'b0),
-	.OLOADBOT(1'b0),
-	.ADDSUBTOP(1'b0),
-	.ADDSUBBOT(1'b0),
+	.OLOADTOP(1'b0), // default
+	.OLOADBOT(1'b0), // default
+	.ADDSUBTOP(1'b0), // default
+	.ADDSUBBOT(1'b0), // default
 	.CI(1'b0), // default
 	.CO(), // default
-	.ACCUMCI(1'b0), // default
+	.ACCUMCI(), // default
 	.ACCUMCO(), // default
 	.SIGNEXTIN(1'b0), // default
 	.SIGNEXTOUT(), // default

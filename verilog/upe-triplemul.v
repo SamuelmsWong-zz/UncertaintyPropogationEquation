@@ -8,11 +8,25 @@
 
 `define GOT_UPE_TRIPLEMULV
 
-module upe_triplemul16uuu(A, B, C, Out); // Out = A * B * C
+// module upe_triplemul16uuu(A, B, C, Out, probe); // Out = A * B * C
+// 	input [15:0]	A;
+// 	input [15:0]	B;
+// 	input [15:0]	C;
+
+// 	output [63:0]	Out;
+// 	output [63:0]	probe;
+
+// 	assign Out = A*B*C;
+// 	assign probe = 0;
+// endmodule
+
+module upe_triplemul16uuu(A, B, C, Out, probe); // Out = A * B * C
 	input [15:0]	A;
 	input [15:0]	B;
 	input [15:0]	C;
+
 	output [63:0]	Out;
+	output [63:0]	probe;
 
 	wire [31:0]	AtimesB;
 	wire [63:0]	Out1;
@@ -51,4 +65,6 @@ module upe_triplemul16uuu(A, B, C, Out); // Out = A * B * C
 	assign Out1[63:32] = {32'h00000000};
 	assign Out2[63:48] = {16'h0000};
 	assign Out2[15: 0] = {16'h0000};
+	assign probe = {32'h00000000, AtimesB};
+
 endmodule

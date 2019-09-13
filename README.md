@@ -13,23 +13,27 @@ $$\sigma_z^2 = \left({{\partial f}\over{\partial x}}\sigma_x\right)^2 + 2{{\part
 
 
 SB_MAC16 DSP Functional Model (Please replace with a higher resolution image if you find one):
-![](DSPschematic.png)
+![](docs/DSPschematic.png)
 
 
-This is a basic version.
-![](BasicIdea.png)
-This design assumes the UPU to be a logic block (in that it is treated just like an ALU - pure combinational logic with no registers), so all values will percolate asychronously. Therefore all values will be non-registered. The quantity of DSP blocks used have not been considered.
+This is a basic version. Not very efficient, but helps to understand the data path involved and points of discussion that might come out of it.
+![](docs/BasicIdea.png)
+This design assumes the UPU to be a logic block (in that it is treated just like an ALU - pure combinational logic with no registers), so all values will percolate asychronously. Therefore all values will be non-registered.
 For easy multiplication, the absolute values of the inputs will be used and then the sign re-introduced at after multiplication.
 
 - The UPU verilog code makes use of multiple ice40 DSPs to carry out its addition and multiplication.
 - DSP functions are determined by the various input signals and control signals (for some reason yosys does not allow control signals to be non-constant).
 - Each term of the UPE requires a 3-operand multiply (and the 2nd has a 1-bit shift to the right). This means 3 16-bit inputs will produce a 48-bit output. Is this desired?
+- (As far as I know), the DSP cannot perform 2 independent 16-bit additions each with carry.
+- The quantity of DSP blocks used have not been considered. I have used quite a lot.
+- Any `probe` outputs were only used for testing. They can be removed.
 
 # Discussion:
 How many bits should the UPU work with?
 Start off basic - use 16bit inputs because the DSP can only do 16x16 multiplication.
 Due to triple multiplies, the UPU must add 48bit numbers together. This will output a 48bit number.
 16bit input, 48bit output...?
+
 ## Conserve number of bits
 - Chop the 48bit down to 16bit. Which bits should be chopped? The lowest 32 bits? What if all the information is in the lowest 32 bits?
 - Have a 64bit system, and reduce the input values to 16bit pre-UPU. But then how will it know where the fixed point is? Might as well use floating point? However floating-point representation is much more susceptible to instability. That was the reason for using integers in the first place.
@@ -39,5 +43,5 @@ Due to triple multiplies, the UPU must add 48bit numbers together. This will out
 
 
 # Future exploration
-- Extend to 32bit integers
-- DSPs are capable of being pipelined, using the intermediate registers.
+- Extend to input 32bit integers?
+- DSPs are capable of being pipelined, using the intermediate registers. Would result in a multi-stage execution with respect to a whole processor pipeline.

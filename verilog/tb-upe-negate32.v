@@ -20,10 +20,12 @@ module tb_upe_negate32(led0);
 		.CLKLFEN(1'b1),
 		.CLKLF(clk)
 	);
-	upe_negate32 negate(
+
+	upe_negate32u negate(
 		.In(x[31:0]),
 		.Out(y[31:0]),
 	);
+
 	initial begin
 		x = 32'hCB2AEACF;
 		// // y = 32'h34D51531; You might recognise this rythym...

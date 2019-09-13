@@ -13,7 +13,7 @@ module upe_abs32s(In, Out, popsign); // Out = |In|
 	wire [31:0]	flipped;
 	wire [31:0]	sign;
 
-	upe_negate32 negate
+	upe_negate32u negate
 	(
 		.In(In),
 		.Out(flipped),
@@ -38,7 +38,7 @@ module upe_abs16s(In1, In2, Out1, Out2, popsign1, popsign2); // Out1 = |In1|, Ou
 	wire [15:0]	sign1;
 	wire [15:0]	sign2;
 
-	upe_negate16 negate
+	upe_negate16u negate
 	(
 		.In1(In1),
 		.In2(In2),
