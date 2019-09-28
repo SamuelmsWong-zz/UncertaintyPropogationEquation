@@ -1,7 +1,8 @@
 # UncertaintyPropogationEquation
 A set of verilog source files for a unit that applies the first-order uncertainty propogation equation to 16-bit inputs.
 
-This README is more or less a log of what I've done.
+This README is more or less a log of what I've done. It's a bit all over the place...
+I started working before realising that there was an RTL Coding Convention, which is now included in this repository.
 
 UPU: Uncertainty Propogation Unit
 
@@ -18,7 +19,7 @@ SB_MAC16 DSP Functional Model (Please replace with a higher resolution image if 
 ![](docs/DSPschematic.png)
 
 
-This is a basic version I have made. Not very efficient, but helps to understand the data path involved and points of discussion that might come out of it.
+This is a basic version I have made. In the least, it helps to understand the data path involved and points of discussion that might come out of it.
 ![](docs/BasicIdea.png)
 This design assumes the UPU to be a logic block (in that it is treated just like an ALU - pure combinational logic with no registers), so all values will percolate asychronously. Therefore all values will be non-registered (see ice40 DSP control signals).
 For easy multiplication, the absolute values of the inputs will be used and then the sign re-introduced at after multiplication.
@@ -46,5 +47,5 @@ Due to triple multiplies, the UPU must add 48bit numbers together. This will out
 
 
 # Future exploration
-- Extend to input 32bit integers?
-- The ice40DSPs are capable of being pipelined, using the intermediate registers. This would result in a multi-stage execution with respect to a whole processor pipeline.
+- Extend to input 32bit integers? Use recursive multiplication such as Karatsuba's algorithm?
+- The ice40DSPs are capable of being pipelined, using intermediate registers. This would result in a multi-stage execution with respect to a whole processor pipeline (see DSPFunctionUsageGuideforICE40Devices.pdf for usage).
